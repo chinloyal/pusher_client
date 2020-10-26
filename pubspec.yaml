@@ -1,0 +1,28 @@
+name: pusher_client
+description: A new flutter plugin project.
+version: 0.0.1
+author:
+homepage: github.com/chinloyal/pusher_client
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+  flutter: ">=1.20.0 <2.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  build_runner:
+  json_serializable: ^3.5.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  plugin:
+    platforms:
+      android:
+        package: com.github.chinloyal.pusher_client
+        pluginClass: PusherClientPlugin
+      ios:
+        pluginClass: PusherClientPlugin

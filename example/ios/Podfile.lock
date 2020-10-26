@@ -1,0 +1,22 @@
+PODS:
+  - Flutter (1.0.0)
+  - pusher_client (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - pusher_client (from `.symlinks/plugins/pusher_client/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  pusher_client:
+    :path: ".symlinks/plugins/pusher_client/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  pusher_client: 7013d43160d63d8c17d20b379dc528faf355c2c9
+
+PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
+
+COCOAPODS: 1.9.3
