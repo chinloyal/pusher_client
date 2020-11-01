@@ -26,32 +26,40 @@ class _MyAppState extends State<MyApp> {
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> pusherTest() async {
     print('start');
-    // pusher = new PusherClient(
-    //   "dev-key",
-    //   PusherOptions(
-    //     host: '10.0.2.2',
-    //     wsPort: 6001,
-    //     encrypted: false,
-    //     auth: PusherAuth(
-    //       'http://10.0.2.2:8000/api/broadcasting/auth',
-    //       headers: {
-    //         'Authorization':
-    //             'Bearer Esyz231fh2RPx8CbOyY5kZ9JHlL3m9ufSJd7Vmw7RtYT1JSRqUalQuVVVWEkYemVwRoO1gP3A4gALyQ4',
-    //       },
-    //     ),
-    //   ),
-    //   enableLogging: true,
-    // );
-    // // p.connect();
-    // channel = pusher.subscribe("private-qpin.1");
+    pusher = new PusherClient(
+      "dev-key",
+      PusherOptions(
+        host: '10.0.2.2',
+        wsPort: 6001,
+        wssPort: 6001,
+        encrypted: false,
+        auth: PusherAuth(
+          'http://10.0.2.2:8000/api/broadcasting/auth',
+          headers: {
+            'Authorization':
+                'Bearer Esyz231fh2RPx8CbOyY5kZ9JHlL3m9ufSJd7Vmw7RtYT1JSRqUalQuVVVWEkYemVwRoO1gP3A4gALyQ4',
+          },
+        ),
+      ),
+      enableLogging: true,
+    );
 
-    // channel.bind('stranger.sent.message.event', (event) {
-    //   log(event.toString());
-    // });
+    pusher.onConnectionStateChange((state) {
+      log("previousState: ${state.previousState}, currentState: ${state.currentState}");
+    });
 
-    // channel.bind('demo.event', (event) {
-    //   log("DEMO EVENT" + event.toString());
-    // });
+    pusher.onConnectionError((error) {
+      log("error: ${error.message}");
+    });
+    channel = pusher.subscribe("private-qpin.1");
+
+    channel.bind('stranger.sent.message.event', (event) {
+      log(event.toString());
+    });
+
+    channel.bind('demo.event', (event) {
+      log("DEMO EVENT" + event.toString());
+    });
     print("done");
   }
 

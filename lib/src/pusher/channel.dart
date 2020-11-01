@@ -25,8 +25,13 @@ class Channel {
     });
   }
 
+  /// Binds a callback ([onEvent]) to an event. The
+  /// callback will be notified whenever the specified
+  /// [eventName] is received on this channel.
   Future<void> bind(
-      String eventName, void Function(dynamic event) onEvent) async {
+    String eventName,
+    void Function(dynamic event) onEvent,
+  ) async {
     _eventStreamSubscription =
         _eventStream.receiveBroadcastStream().listen(_eventHandler);
     _eventCallbacks[this.name + eventName] = onEvent;
@@ -37,6 +42,8 @@ class Channel {
     });
   }
 
+  /// Unbinds the callback from the given [eventName], in the scope
+  /// of the channel being acted upon
   Future<void> unbind(String eventName) async {
     _eventCallbacks.remove(this.name + eventName);
 
@@ -50,16 +57,26 @@ class Channel {
     });
   }
 
+  /// Once subscribed it is possible to trigger client events on a private
+  /// channel as long as client events have been activated for the a Pusher
+  /// application. There are a number of restrictions enforced with client
+  /// events. For full details see the
+  /// [documentation](http://pusher.com/docs/client_events)
+  ///
+  /// The [eventName] to trigger must have a `client-` prefix.
   Future<void> trigger(String eventName, dynamic data) async {
     if (!eventName.startsWith('client-')) {
       eventName = "client-$eventName";
     }
 
-    await _mChannel.invokeMethod('trigger', {
-      'eventName': eventName,
-      'data': jsonEncode(data),
-      'channelName': this.name,
-    });
+    await _mChannel.invokeMethod(
+      'trigger',
+      jsonEncode({
+        'eventName': eventName,
+        'data': data.toString(),
+        'channelName': this.name,
+      }),
+    );
   }
 
   Future<void> _eventHandler(event) async {

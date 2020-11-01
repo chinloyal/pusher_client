@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/services.dart';
 import 'package:pusher_client/pusher_client.dart';
@@ -51,11 +52,14 @@ class PusherClient {
   Future _init(String appKey, PusherOptions options, _InitArgs initArgs) async {
     _singleton._eventStreamSubscription =
         _eventStream.receiveBroadcastStream().listen(eventHandler);
-    await _channel.invokeMethod('init', {
-      'appKey': appKey,
-      'pusherOptions': jsonEncode(options),
-      'initArgs': jsonEncode(initArgs),
-    });
+    await _channel.invokeMethod(
+      'init',
+      jsonEncode({
+        'appKey': appKey,
+        'pusherOptions': options,
+        'initArgs': initArgs,
+      }),
+    );
   }
 
   Channel subscribe(String channelName) {

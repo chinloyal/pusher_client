@@ -1,15 +1,41 @@
 # pusher_client
 
-A new flutter plugin project.
 
-## Getting Started
+# Resolve common issues
 
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
+## iOS doesn't log when enableLogging is set to true
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+iOS logging doesn't seem to output to flutter console, however if you run the
+app from Xcode you should be able to see the logs.
 
+
+## Subscribing to private channels with iOS
+
+If using a local pusher server but are unable to subscribe to a private channel
+then add this to your ios/Runner/Info.plist:
+
+```xml
+<key>NSAppTransportSecurity</key>
+<dict>
+    <key>NSAllowsArbitraryLoads</key>
+    <true/>
+</dict>
+```
+
+If you know which domains you will connect to add:
+
+```xml
+<key>NSAppTransportSecurity</key>
+<dict>
+    <key>NSExceptionDomains</key>
+    <dict>
+        <key>example.com</key>
+        <dict>
+            <key>NSExceptionAllowsInsecureHTTPLoads</key>
+            <true/>
+            <key>NSIncludesSubdomains</key>
+            <true/>
+        </dict>
+    </dict>
+</dict>
+```

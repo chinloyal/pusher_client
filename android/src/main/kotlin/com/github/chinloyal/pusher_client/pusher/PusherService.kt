@@ -9,6 +9,7 @@ import com.pusher.client.Pusher
 import com.pusher.client.PusherOptions
 import com.pusher.client.connection.ConnectionState
 import com.pusher.client.util.HttpAuthorizer
+import com.pusher.client.util.UrlEncodedConnectionFactory
 import io.flutter.plugin.common.BinaryMessenger
 import io.flutter.plugin.common.EventChannel
 import io.flutter.plugin.common.EventChannel.EventSink
@@ -86,7 +87,10 @@ class PusherService : MChannel {
                 val auth: JSONObject = options.getJSONObject("auth")
                 val endpoint: String = auth.getString("endpoint")
                 val headersMap: Map<String, String> = Gson().fromJson<Map<String, String>>(auth.getString("headers"), Map::class.java)
-                val authorizer = HttpAuthorizer(endpoint, JsonEncodedConnectionFactory())
+                val encodedConnectionFactory = if (headersMap.containsValue("application/json"))
+                    JsonEncodedConnectionFactory() else UrlEncodedConnectionFactory()
+
+                val authorizer = HttpAuthorizer(endpoint,  encodedConnectionFactory)
                 authorizer.setHeaders(headersMap)
 
                 pusherOptions.authorizer = authorizer
@@ -255,7 +259,7 @@ class PusherService : MChannel {
         try {
             val args = JSONObject(call.arguments.toString())
             val eventName: String = args.getString("eventName")
-            val data: JSONObject = args.getJSONObject("data")
+            val data: String = args.getString("data")
             val channelName: String = args.getString("channelName")
             val errorMessage = "Trigger can only be called on private and presence channels.";
             when {
@@ -264,11 +268,11 @@ class PusherService : MChannel {
                 }
                 channelName.startsWith(PRIVATE_PREFIX) -> {
                     val channel = _pusherInstance?.getPrivateChannel(channelName)
-                    channel?.trigger(eventName, data.toString())
+                    channel?.trigger(eventName, data)
                 }
                 channelName.startsWith(PRESENCE_PREFIX) -> {
                     val channel = _pusherInstance?.getPresenceChannel(channelName)
-                    channel?.trigger(eventName, data.toString())
+                    channel?.trigger(eventName, data)
                 }
                 else -> result.error("TRIGGER_ERROR", errorMessage, null)
             }
