@@ -1,8 +1,9 @@
 name: pusher_client
 description: A pusher client plugin.
 version: 1.0.0
-author:
-homepage: github.com/chinloyal/pusher_client
+homepage: https://github.com/chinloyal/pusher_client
+documentation: https://github.com/chinloyal/pusher_client/blob/master/README.md
+
 
 environment:
   sdk: ">=2.7.0 <3.0.0"

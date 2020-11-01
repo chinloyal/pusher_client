@@ -2,6 +2,7 @@ package com.github.chinloyal.pusher_client.pusher.listeners
 
 import android.os.Handler
 import android.os.Looper
+import com.github.chinloyal.pusher_client.core.utils.Constants
 import com.github.chinloyal.pusher_client.pusher.PusherService.Companion.debugLog
 import com.github.chinloyal.pusher_client.pusher.PusherService.Companion.eventSink
 import com.pusher.client.channel.ChannelEventListener
@@ -37,6 +38,13 @@ open class FlutterBaseChannelEventListener: ChannelEventListener {
     }
 
     override fun onSubscriptionSucceeded(channelName: String) {
+        this.onEvent(PusherEvent(mapOf(
+                "event" to Constants.SUBSCRIPTION_SUCCEEDED.value,
+                "channel" to channelName,
+                "user_id" to null,
+                "data" to null
+        )))
         debugLog("[PUBLIC] Subscribed: $channelName")
+
     }
 }
