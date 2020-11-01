@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:pusher_client/src/models/event_stream_result.dart';
+import 'package:pusher_client/src/pusher/pusher_event.dart';
 
 class Channel {
   static const MethodChannel _mChannel =
@@ -10,7 +11,8 @@ class Channel {
   static const EventChannel _eventStream =
       const EventChannel('com.github.chinloyal/pusher_client_stream');
 
-  Map<String, Function> _eventCallbacks = Map<String, Function>();
+  Map<String, void Function(PusherEvent)> _eventCallbacks =
+      Map<String, void Function(PusherEvent)>();
   StreamSubscription _eventStreamSubscription;
 
   final String name;
@@ -30,7 +32,7 @@ class Channel {
   /// [eventName] is received on this channel.
   Future<void> bind(
     String eventName,
-    void Function(dynamic event) onEvent,
+    void Function(PusherEvent event) onEvent,
   ) async {
     _eventStreamSubscription =
         _eventStream.receiveBroadcastStream().listen(_eventHandler);
@@ -86,7 +88,7 @@ class Channel {
       var callback = _eventCallbacks[
           result.pusherEvent.channelName + result.pusherEvent.eventName];
       if (callback != null) {
-        callback(jsonDecode(result.pusherEvent.data));
+        callback(result.pusherEvent);
       }
     }
   }

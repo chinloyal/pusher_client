@@ -96,6 +96,8 @@ class PusherService : MChannel {
                 pusherOptions.authorizer = authorizer
             }
 
+            pusherOptions.setHost(options.getString("host"))
+
             if(!options.isNull("cluster")) {
                 pusherOptions.setCluster(options.getString("cluster"))
             }
@@ -104,7 +106,6 @@ class PusherService : MChannel {
             pusherOptions.pongTimeout = options.getLong("pongTimeout")
             pusherOptions.maxReconnectionAttempts = options.getInt("maxReconnectionAttempts")
             pusherOptions.maxReconnectGapInSeconds = options.getInt("maxReconnectGapInSeconds")
-            pusherOptions.setHost(options.getString("host"))
             pusherOptions.setWsPort(options.getInt("wsPort"))
             pusherOptions.setWssPort(options.getInt("wssPort"))
             pusherOptions.isUseTLS = options.getBoolean("encrypted")

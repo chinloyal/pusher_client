@@ -1,6 +1,6 @@
 name: pusher_client
-description: A new flutter plugin project.
-version: 0.0.1
+description: A pusher client plugin.
+version: 1.0.0
 author:
 homepage: github.com/chinloyal/pusher_client
 

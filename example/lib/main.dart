@@ -29,12 +29,12 @@ class _MyAppState extends State<MyApp> {
     pusher = new PusherClient(
       "dev-key",
       PusherOptions(
-        host: '10.0.2.2',
+        host: 'localhost',
         wsPort: 6001,
         wssPort: 6001,
         encrypted: false,
         auth: PusherAuth(
-          'http://10.0.2.2:8000/api/broadcasting/auth',
+          'http://localhost:8000/api/broadcasting/auth',
           headers: {
             'Authorization':
                 'Bearer Esyz231fh2RPx8CbOyY5kZ9JHlL3m9ufSJd7Vmw7RtYT1JSRqUalQuVVVWEkYemVwRoO1gP3A4gALyQ4',
@@ -54,7 +54,7 @@ class _MyAppState extends State<MyApp> {
     channel = pusher.subscribe("private-qpin.1");
 
     channel.bind('stranger.sent.message.event', (event) {
-      log(event.toString());
+      log(event.data);
     });
 
     channel.bind('demo.event', (event) {
@@ -68,7 +68,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Plugin example app'),
+          title: const Text('Example Pusher App'),
         ),
         body: Center(
             child: Column(

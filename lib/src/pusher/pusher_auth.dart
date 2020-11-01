@@ -4,7 +4,10 @@ part 'pusher_auth.g.dart';
 
 @JsonSerializable()
 class PusherAuth {
+  /// The endpoint to be called when authenticating.
   final String endpoint;
+
+  /// Additional headers to be sent as part of the request.
   final Map<String, String> headers;
 
   PusherAuth(
