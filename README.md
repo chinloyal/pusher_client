@@ -1,5 +1,7 @@
 # Pusher Channels Flutter Client
 
+[![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/chinloyal/pusher_client/master/LICENSE)
+
 A Pusher Channels client plugin for Flutter targeting Android and iOS. It wraps
 [pusher-websocket-java](https://github.com/pusher/pusher-websocket-java) v2.2.5 and [pusher-websocket-swift](https://github.com/pusher/pusher-websocket-swift) v8.0.0.
 
@@ -34,6 +36,7 @@ This client with official pusher servers and laravel self hosted pusher websocke
 - [Triggering Client Events](#triggering-client-events)
 - [Accessing The Connection Socket ID](#accessing-the-connection-socket-id)
 - [Resolve Common Issues](#resolve-common-issues)
+- [Testing](#testing)
 ## Installation
 
 Add to your pubspec.yaml
@@ -363,3 +366,7 @@ If you know which domains you will connect to add:
     </dict>
 </dict>
 ```
+
+## Testing
+
+Both unit and integration tests are coming soon

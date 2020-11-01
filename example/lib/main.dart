@@ -20,29 +20,26 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    pusherTest();
-  }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
-  Future<void> pusherTest() async {
-    print('start');
+    String token = getToken();
+
     pusher = new PusherClient(
       "dev-key",
       PusherOptions(
+        // if local on android use 10.0.2.2
         host: 'localhost',
-        wsPort: 6001,
-        wssPort: 6001,
         encrypted: false,
         auth: PusherAuth(
-          'http://localhost:8000/api/broadcasting/auth',
+          'http://example.com/broadcasting/auth',
           headers: {
-            'Authorization':
-                'Bearer Esyz231fh2RPx8CbOyY5kZ9JHlL3m9ufSJd7Vmw7RtYT1JSRqUalQuVVVWEkYemVwRoO1gP3A4gALyQ4',
+            'Authorization': 'Bearer $token',
           },
         ),
       ),
       enableLogging: true,
     );
+
+    channel = pusher.subscribe("private-orders");
 
     pusher.onConnectionStateChange((state) {
       log("previousState: ${state.previousState}, currentState: ${state.currentState}");
@@ -51,17 +48,17 @@ class _MyAppState extends State<MyApp> {
     pusher.onConnectionError((error) {
       log("error: ${error.message}");
     });
-    channel = pusher.subscribe("private-qpin.1");
 
-    channel.bind('stranger.sent.message.event', (event) {
+    channel.bind('status-update', (event) {
       log(event.data);
     });
 
-    channel.bind('demo.event', (event) {
-      log("DEMO EVENT" + event.toString());
+    channel.bind('order-filled', (event) {
+      log("Order Filled Event" + event.data.toString());
     });
-    print("done");
   }
+
+  String getToken() => "super-secret-token";
 
   @override
   Widget build(BuildContext context) {
@@ -74,35 +71,35 @@ class _MyAppState extends State<MyApp> {
             child: Column(
           children: [
             RaisedButton(
-              child: Text('Unsubscribe'),
+              child: Text('Unsubscribe Private Orders'),
               onPressed: () {
-                pusher.unsubscribe('private-qpin.1');
+                pusher.unsubscribe('private-orders');
               },
             ),
             RaisedButton(
-              child: Text('Unbind 1'),
+              child: Text('Unbind Status Update'),
               onPressed: () {
-                channel.unbind('stranger.sent.message.event');
+                channel.unbind('status-update');
               },
             ),
             RaisedButton(
-              child: Text('Unbind 2'),
+              child: Text('Unbind Order Filled'),
               onPressed: () {
-                channel.unbind('demo.event');
+                channel.unbind('order-filled');
               },
             ),
             RaisedButton(
-              child: Text('Bind 1'),
+              child: Text('Bind Status Update'),
               onPressed: () {
-                channel.bind('demo.event', (event) {
-                  log("DEMO EVENT" + event.toString());
+                channel.bind('status-update', (PusherEvent event) {
+                  log("Status Update Event" + event.data.toString());
                 });
               },
             ),
             RaisedButton(
-              child: Text('Trigger 1'),
+              child: Text('Trigger Client Typing'),
               onPressed: () {
-                channel.trigger('demo.event', {'message': 'I am kl :)'});
+                channel.trigger('client-istyping', {'name': 'Bob'});
               },
             ),
           ],
