@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'dart:async';
 import 'package:pusher_client/pusher_client.dart';
 
 void main() {
@@ -24,7 +23,7 @@ class _MyAppState extends State<MyApp> {
     String token = getToken();
 
     pusher = new PusherClient(
-      "dev-key",
+      "app-key",
       PusherOptions(
         // if local on android use 10.0.2.2
         host: 'localhost',
