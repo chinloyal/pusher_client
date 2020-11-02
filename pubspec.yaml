@@ -14,8 +14,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  build_runner:
+  build_runner: ^1.10.4
   json_serializable: ^3.5.0
+  json_annotation: ^3.1.0
 
 dev_dependencies:
   flutter_test:
