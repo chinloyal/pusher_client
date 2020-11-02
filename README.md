@@ -1,5 +1,6 @@
 # Pusher Channels Flutter Client
 
+[![pub version](https://img.shields.io/pub/v/pusher_client.svg)](https://pub.dartlang.org/packages/pusher_client)
 [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/chinloyal/pusher_client/master/LICENSE)
 
 A Pusher Channels client plugin for Flutter targeting Android and iOS. It wraps
