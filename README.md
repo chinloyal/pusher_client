@@ -104,6 +104,13 @@ buildTypes {
 }
 ```
 
+Then in `android/app/proguard-rules.pro`:
+
+```pro
+-keep class com.github.chinloyal.pusher_client.** { *; }
+```
+
+
 ## API Overview
 
 Here's the API in nutshell.
