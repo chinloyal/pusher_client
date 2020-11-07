@@ -8,7 +8,7 @@ A Pusher Channels client plugin for Flutter targeting Android and iOS. It wraps
 
 For tutorials and more in-depth information about Pusher Channels, visit the [official docs](https://pusher.com/docs/channels).
 
-This client with official pusher servers and laravel self hosted pusher websocket server ([laravel-websockets](https://github.com/beyondcode/laravel-websockets)). 
+This client works with official pusher servers and laravel self hosted pusher websocket server ([laravel-websockets](https://github.com/beyondcode/laravel-websockets)). 
 
 ## Supported Platforms & Deployment Targets
 
@@ -44,7 +44,7 @@ Add to your pubspec.yaml
 
 ```yaml
 dependencies:
-    pusher_client: ^1.0.0
+    pusher_client: ^1.0.1
 ```
 
 ## Configuration
@@ -173,7 +173,7 @@ PusherClient pusher = PusherClient(YOUR_APP_KEY, PusherOptions());
 ```
 
 
-If you are going to use [private](https://pusher.com/docs/channels/using_channels/private-channels), [presence](https://pusher.com/docs/channels/using_channels/presence-channels) or [encrypted](https://pusher.com/docs/channels/using_channels/encrypted-channels) channels then you will need to provide an `PusherAuth` to be used when authenticating subscriptions. In order to do this you need to pass in a `PusherOptions` object which has had an `auth` set.
+If you are going to use [private](https://pusher.com/docs/channels/using_channels/private-channels), [presence](https://pusher.com/docs/channels/using_channels/presence-channels) or [encrypted](https://pusher.com/docs/channels/using_channels/encrypted-channels) channels then you will need to provide a `PusherAuth` to be used when authenticating subscriptions. In order to do this you need to pass in a `PusherOptions` object which has had an `auth` set.
 
 ```dart
 PusherAuth auth = PusherAuth(

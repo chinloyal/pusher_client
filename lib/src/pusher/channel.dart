@@ -11,7 +11,7 @@ class Channel {
   static const EventChannel _eventStream =
       const EventChannel('com.github.chinloyal/pusher_client_stream');
 
-  Map<String, void Function(PusherEvent)> _eventCallbacks =
+  static Map<String, void Function(PusherEvent)> _eventCallbacks =
       Map<String, void Function(PusherEvent)>();
   StreamSubscription _eventStreamSubscription;
 
