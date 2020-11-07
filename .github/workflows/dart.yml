@@ -1,0 +1,27 @@
+name: Publish pusher_client to pub.dev
+on:
+  release:
+    types:
+      - published
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image:  google/dart:latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup credentials
+      run: | 
+        mkdir -p ~/.pub-cache 
+        cat <<EOF > ~/.pub-cache/credentials.json
+        {
+          "accessToken":"${{ secrets.PUB_ACCESS_TOKEN }}",
+          "refreshToken":"${{ secrets.PUB_REFRESH_TOKEN }}",
+          "tokenEndpoint":"https://accounts.google.com/o/oauth2/token",
+          "scopes": [ "openid", "https://www.googleapis.com/auth/userinfo.email" ],
+          "expiration": 1604281072748
+        }
+        EOF
+    - name: Publish package
+      run: pub publish -f
+
