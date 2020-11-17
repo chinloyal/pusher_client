@@ -44,7 +44,7 @@ Add to your pubspec.yaml
 
 ```yaml
 dependencies:
-    pusher_client: ^1.0.1
+    pusher_client: ^1.0.2
 ```
 
 ## Configuration
@@ -113,7 +113,7 @@ Then in `android/app/proguard-rules.pro`:
 
 ## API Overview
 
-Here's the API in nutshell.
+Here's the API in a nutshell.
 
 ```dart
 PusherOptions options = PusherOptions(

@@ -1,3 +1,6 @@
+## 1.0.2 - November 17, 2020
+* BUGFIX: Fixes issue #1, Double backslashes in the bind event breaks the JSON encoding. (This issue was only on android, iOS worked fine.)
+
 ## 1.0.1 - November 7, 2020
 
 * BUGFIX: Fixed not being able to bind to multiple types of channels at once.
