@@ -75,6 +75,7 @@ class PusherService : MChannel {
     }
 
     private fun init(call: MethodCall, result: Result) {
+        // toString works because this is json encoded in dart
         val args = JSONObject(call.arguments.toString())
         val initArgs: JSONObject = args.getJSONObject("initArgs")
         enableLogging = initArgs.getBoolean("enableLogging")
@@ -135,7 +136,8 @@ class PusherService : MChannel {
 
     private fun subscribe(call: MethodCall, result: Result) {
         try {
-            val args = JSONObject(call.arguments.toString())
+            val src = call.arguments as Map<String, Any>
+            val args = JSONObject(src)
             val channelName: String = args.getString("channelName")
 
             when {
@@ -171,7 +173,8 @@ class PusherService : MChannel {
 
     private fun unsubscribe(call: MethodCall, result: Result) {
         try {
-            val args = JSONObject(call.arguments.toString());
+            val src = call.arguments as Map<String, Any>
+            val args = JSONObject(src);
             val channelName = args.getString("channelName")
 
             _pusherInstance?.unsubscribe(channelName)
@@ -190,7 +193,8 @@ class PusherService : MChannel {
      */
     private fun bind(call: MethodCall, result: Result) {
         try {
-            val args = JSONObject(call.arguments.toString())
+            val src = call.arguments as Map<String, Any>
+            val args = JSONObject(src)
             val channelName: String = args.getString("channelName")
             val eventName: String = args.getString("eventName")
 
@@ -224,7 +228,8 @@ class PusherService : MChannel {
 
     private fun unbind(call: MethodCall, result: Result) {
         try {
-            val args = JSONObject(call.arguments.toString())
+            val src = call.arguments as Map<String, Any>
+            val args = JSONObject(src)
             val channelName: String = args.getString("channelName")
             val eventName: String = args.getString("eventName")
 
@@ -258,11 +263,12 @@ class PusherService : MChannel {
 
     private fun trigger(call: MethodCall, result: Result) {
         try {
+            // toString works because this is json encoded in dart
             val args = JSONObject(call.arguments.toString())
             val eventName: String = args.getString("eventName")
             val data: String = args.getString("data")
             val channelName: String = args.getString("channelName")
-            val errorMessage = "Trigger can only be called on private and presence channels.";
+            val errorMessage = "Trigger can only be called on private and presence channels."
             when {
                 channelName.startsWith(PRIVATE_ENCRYPTED_PREFIX) -> {
                     result.error("TRIGGER_ERROR", errorMessage, null)

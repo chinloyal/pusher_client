@@ -35,20 +35,19 @@ class PusherClient {
     bool autoConnect = true,
   });
 
+  /// Creates a [PusherClient] -- returns the instance if it's already be called.
   factory PusherClient(
     String appKey,
     PusherOptions options, {
     bool enableLogging = true,
     bool autoConnect = true,
   }) {
-    if (_singleton == null) {
-      _singleton = PusherClient._(
-        appKey,
-        options,
-        enableLogging: enableLogging,
-        autoConnect: autoConnect,
-      );
-    }
+    _singleton ??= PusherClient._(
+      appKey,
+      options,
+      enableLogging: enableLogging,
+      autoConnect: autoConnect,
+    );
 
     final initArgs = _InitArgs(enableLogging: enableLogging);
 
