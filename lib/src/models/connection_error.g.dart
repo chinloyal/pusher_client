@@ -1,10 +1,6 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
+// YOU SHOULD MODIFY BY HAND
 
 part of 'connection_error.dart';
-
-// **************************************************************************
-// JsonSerializableGenerator
-// **************************************************************************
 
 ConnectionError _$ConnectionErrorFromJson(Map<String, dynamic> json) {
   return ConnectionError(

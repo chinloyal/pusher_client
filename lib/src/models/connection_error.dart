@@ -1,8 +1,5 @@
-import 'package:json_annotation/json_annotation.dart';
-
 part 'connection_error.g.dart';
 
-@JsonSerializable()
 class ConnectionError {
   /// A message indicating the cause of the error.
   final String message;

@@ -1,9 +1,7 @@
 import 'package:pusher_client/src/pusher/pusher_auth.dart';
-import 'package:json_annotation/json_annotation.dart';
 
 part 'pusher_options.g.dart';
 
-@JsonSerializable()
 class PusherOptions {
   /// Sets the authorization options to be used when authenticating private,
   /// private-encrypted and presence channels.

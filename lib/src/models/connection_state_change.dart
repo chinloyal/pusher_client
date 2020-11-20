@@ -1,8 +1,5 @@
-import 'package:json_annotation/json_annotation.dart';
-
 part 'connection_state_change.g.dart';
 
-@JsonSerializable()
 class ConnectionStateChange {
   /// The current connection state. The state the connection has transitioned
   /// to.

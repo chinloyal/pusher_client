@@ -1,10 +1,6 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
+// YOU SHOULD MODIFY BY HAND
 
 part of 'connection_state_change.dart';
-
-// **************************************************************************
-// JsonSerializableGenerator
-// **************************************************************************
 
 ConnectionStateChange _$ConnectionStateChangeFromJson(
     Map<String, dynamic> json) {

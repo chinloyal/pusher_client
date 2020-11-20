@@ -3,7 +3,6 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:pusher_client/pusher_client.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:pusher_client/src/models/connection_error.dart';
 import 'package:pusher_client/src/models/connection_state_change.dart';
 import 'package:pusher_client/src/models/event_stream_result.dart';
@@ -49,7 +48,7 @@ class PusherClient {
       autoConnect: autoConnect,
     );
 
-    final initArgs = _InitArgs(enableLogging: enableLogging);
+    final initArgs = InitArgs(enableLogging: enableLogging);
 
     _singleton._init(appKey, options, initArgs);
 
@@ -58,7 +57,7 @@ class PusherClient {
     return _singleton;
   }
 
-  Future _init(String appKey, PusherOptions options, _InitArgs initArgs) async {
+  Future _init(String appKey, PusherOptions options, InitArgs initArgs) async {
     _singleton._eventStreamSubscription =
         _eventStream.receiveBroadcastStream().listen(_eventHandler);
     await _channel.invokeMethod(
@@ -137,13 +136,12 @@ class PusherClient {
   }
 }
 
-@JsonSerializable()
-class _InitArgs {
+class InitArgs {
   final bool enableLogging;
 
-  _InitArgs({
+  InitArgs({
     this.enableLogging,
   });
 
-  Map<String, dynamic> toJson() => _$_InitArgsToJson(this);
+  Map<String, dynamic> toJson() => _$InitArgsToJson(this);
 }

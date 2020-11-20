@@ -1,3 +1,6 @@
+## 1.1.0 - November 20, 2020
+* MINOR: Removed json_serializable and build_runner dependencies, this prevents conflict with projects that have to use those libraries at a specific version.
+
 ## 1.0.2 - November 17, 2020
 * BUGFIX: Fixes issue #1, Double backslashes in the bind event breaks the JSON encoding. (This issue was only on android, iOS worked fine.)
 

@@ -1,10 +1,6 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
+// YOU SHOULD MODIFY BY HAND
 
 part of 'pusher_auth.dart';
-
-// **************************************************************************
-// JsonSerializableGenerator
-// **************************************************************************
 
 PusherAuth _$PusherAuthFromJson(Map<String, dynamic> json) {
   return PusherAuth(

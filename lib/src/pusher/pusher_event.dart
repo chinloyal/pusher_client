@@ -1,8 +1,5 @@
-import 'package:json_annotation/json_annotation.dart';
-
 part 'pusher_event.g.dart';
 
-@JsonSerializable()
 class PusherEvent {
   /// The name of the channel that the event was triggered on. Not present
   /// in events without an associated channel, For example "pusher:error" events

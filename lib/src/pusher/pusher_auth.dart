@@ -1,8 +1,5 @@
-import 'package:json_annotation/json_annotation.dart';
-
 part 'pusher_auth.g.dart';
 
-@JsonSerializable()
 class PusherAuth {
   /// The endpoint to be called when authenticating.
   final String endpoint;

@@ -1,10 +1,6 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
+// YOU SHOULD MODIFY BY HAND
 
 part of 'pusher_options.dart';
-
-// **************************************************************************
-// JsonSerializableGenerator
-// **************************************************************************
 
 PusherOptions _$PusherOptionsFromJson(Map<String, dynamic> json) {
   return PusherOptions(

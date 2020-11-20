@@ -1,10 +1,6 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
+// YOU SHOULD MODIFY BY HAND
 
 part of 'event_stream_result.dart';
-
-// **************************************************************************
-// JsonSerializableGenerator
-// **************************************************************************
 
 EventStreamResult _$EventStreamResultFromJson(Map<String, dynamic> json) {
   return EventStreamResult(

@@ -2,6 +2,8 @@
 
 [![pub version](https://img.shields.io/pub/v/pusher_client.svg)](https://pub.dartlang.org/packages/pusher_client)
 [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/chinloyal/pusher_client/master/LICENSE)
+[![Twitter](https://img.shields.io/badge/twitter-@chinloyal-blue.svg?style=flat)](http://twitter.com/chinloyal)
+![Languages](https://img.shields.io/badge/languages-dart%20%7C%20kotlin%20%7C%20swift-blueviolet.svg)
 
 A Pusher Channels client plugin for Flutter targeting Android and iOS. It wraps
 [pusher-websocket-java](https://github.com/pusher/pusher-websocket-java) v2.2.5 and [pusher-websocket-swift](https://github.com/pusher/pusher-websocket-swift) v8.0.0.
@@ -44,7 +46,7 @@ Add to your pubspec.yaml
 
 ```yaml
 dependencies:
-    pusher_client: ^1.0.2
+    pusher_client: ^1.1.0
 ```
 
 ## Configuration

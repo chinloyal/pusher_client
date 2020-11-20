@@ -1,10 +1,6 @@
-// GENERATED CODE - DO NOT MODIFY BY HAND
+// YOU SHOULD MODIFY BY HAND
 
 part of 'pusher_event.dart';
-
-// **************************************************************************
-// JsonSerializableGenerator
-// **************************************************************************
 
 PusherEvent _$PusherEventFromJson(Map<String, dynamic> json) {
   return PusherEvent(

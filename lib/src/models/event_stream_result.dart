@@ -1,11 +1,9 @@
 import 'package:pusher_client/src/models/connection_error.dart';
 import 'package:pusher_client/src/models/connection_state_change.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:pusher_client/src/pusher/pusher_event.dart';
 
 part 'event_stream_result.g.dart';
 
-@JsonSerializable()
 class EventStreamResult {
   final ConnectionStateChange connectionStateChange;
   final ConnectionError connectionError;
