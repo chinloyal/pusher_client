@@ -36,13 +36,13 @@ class ConnectionListener: ConnectionEventListener {
         }
     }
 
-    override fun onError(message: String, code: String, ex: Exception) {
+    override fun onError(message: String, code: String?, ex: Exception?) {
         Handler(Looper.getMainLooper()).post {
             try {
                 val connectionError = JSONObject(mapOf(
                         "message" to message,
                         "code" to code,
-                        "exception" to ex.message
+                        "exception" to ex?.message
                 ))
 
                 debugLog("[ON_ERROR]: message: $message, code: $code")
