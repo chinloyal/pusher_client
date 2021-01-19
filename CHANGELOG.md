@@ -1,3 +1,6 @@
+## 1.1.1 - January 19, 2021
+* BUGFIX: ConnectionEventListener null safety issue for Android (fixed by [@spiritinlife](https://github.com/spiritinlife))
+
 ## 1.1.0 - November 20, 2020
 * MINOR: Removed json_serializable and build_runner dependencies, this prevents conflict with projects that have to use those libraries at a specific version.
 
