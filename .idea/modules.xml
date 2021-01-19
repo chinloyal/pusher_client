@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/pusher_client.iml" filepath="$PROJECT_DIR$/pusher_client.iml" />
-      <module fileurl="file://$PROJECT_DIR$/android/pusher_client_android.iml" filepath="$PROJECT_DIR$/android/pusher_client_android.iml" />
-      <module fileurl="file://$PROJECT_DIR$/example/android/pusher_client_example_android.iml" filepath="$PROJECT_DIR$/example/android/pusher_client_example_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/pusher_client.iml" filepath="$PROJECT_DIR$/.idea/pusher_client.iml" />
     </modules>
   </component>
 </project>

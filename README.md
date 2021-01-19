@@ -1,9 +1,9 @@
 # Pusher Channels Flutter Client
 
-[![pub version](https://img.shields.io/pub/v/pusher_client.svg)](https://pub.dartlang.org/packages/pusher_client)
+[![pub version](https://img.shields.io/pub/v/pusher_client.svg?logo=dart)](https://pub.dartlang.org/packages/pusher_client)
 [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://raw.githubusercontent.com/chinloyal/pusher_client/master/LICENSE)
-[![Twitter](https://img.shields.io/badge/twitter-@chinloyal-blue.svg?style=flat)](http://twitter.com/chinloyal)
 ![Languages](https://img.shields.io/badge/languages-dart%20%7C%20kotlin%20%7C%20swift-blueviolet.svg)
+[![Twitter](https://img.shields.io/badge/twitter-@chinloyal-blue.svg?style=flat&logo=twitter)](https://twitter.com/chinloyal)
 
 A Pusher Channels client plugin for Flutter targeting Android and iOS. It wraps
 [pusher-websocket-java](https://github.com/pusher/pusher-websocket-java) v2.2.5 and [pusher-websocket-swift](https://github.com/pusher/pusher-websocket-swift) v8.0.0.
@@ -39,7 +39,6 @@ This client works with official pusher servers and laravel self hosted pusher we
 - [Triggering Client Events](#triggering-client-events)
 - [Accessing The Connection Socket ID](#accessing-the-connection-socket-id)
 - [Resolve Common Issues](#resolve-common-issues)
-- [Testing](#testing)
 ## Installation
 
 Add to your pubspec.yaml
@@ -125,8 +124,7 @@ PusherOptions options = PusherOptions(
     auth: PusherAuth(
         'http://example.com/auth',
         headers: {
-        'Authorization':
-            'Bearer $token',
+            'Authorization': 'Bearer $token',
         },
     ),
 );
@@ -151,7 +149,7 @@ pusher.onConnectionError((error) {
 // Subscribe to a private channel
 Channel channel = pusher.subscribe("private-orders");
 
-// Bind to listen for events called "order-status-updated" sent to "private-orders"
+// Bind to listen for events called "order-status-updated" sent to "private-orders" channel
 channel.bind("order-status-updated", (PusherEvent event) {
     print(event.data);
 });
@@ -182,8 +180,7 @@ PusherAuth auth = PusherAuth(
     // for auth endpoint use full url
     'http://example.com/auth',
     headers: {
-    'Authorization':
-        'Bearer $token',
+        'Authorization': 'Bearer $token',
     },
 );
 
@@ -321,7 +318,7 @@ Events triggered by clients are called [client events](https://pusher.com/docs/c
 
 ```dart
 channel.bind("pusher:subscription_succeeded", (PusherEvent event) {
-    channel.trigger("client-istyping", json.encode({"name": "Bob"}));
+    channel.trigger("client-istyping", {"name": "Bob"});
 });
 ```
 
@@ -376,7 +373,3 @@ If you know which domains you will connect to add:
     </dict>
 </dict>
 ```
-
-## Testing
-
-Both unit and integration tests are coming soon
