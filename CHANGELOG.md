@@ -1,3 +1,6 @@
+## 1.1.2 - January 20, 2021
+* PATCH: Removed log4j dependency for android
+
 ## 1.1.1 - January 19, 2021
 * BUGFIX: ConnectionEventListener null safety issue for Android (fixed by [@spiritinlife](https://github.com/spiritinlife))
 

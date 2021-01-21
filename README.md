@@ -45,7 +45,7 @@ Add to your pubspec.yaml
 
 ```yaml
 dependencies:
-    pusher_client: ^1.1.1
+    pusher_client: ^1.1.2
 ```
 
 ## Configuration
