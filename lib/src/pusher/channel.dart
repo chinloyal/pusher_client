@@ -2,18 +2,17 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/services.dart';
+import 'package:pusher_client/src/contracts/stream_handler.dart';
 import 'package:pusher_client/src/models/event_stream_result.dart';
 import 'package:pusher_client/src/pusher/pusher_event.dart';
 
-class Channel {
+class Channel extends StreamHandler {
   static const MethodChannel _mChannel =
       const MethodChannel('com.github.chinloyal/pusher_client');
-  static const EventChannel _eventStream =
-      const EventChannel('com.github.chinloyal/pusher_client_stream');
+  static const classId = 'Channel';
 
   static Map<String, void Function(PusherEvent)> _eventCallbacks =
       Map<String, void Function(PusherEvent)>();
-  StreamSubscription _eventStreamSubscription;
 
   final String name;
 
@@ -34,8 +33,7 @@ class Channel {
     String eventName,
     void Function(PusherEvent event) onEvent,
   ) async {
-    _eventStreamSubscription =
-        _eventStream.receiveBroadcastStream().listen(_eventHandler);
+    registerListener(classId, _eventHandler);
     _eventCallbacks[this.name + eventName] = onEvent;
 
     await _mChannel.invokeMethod('bind', {
@@ -48,10 +46,6 @@ class Channel {
   /// of the channel being acted upon
   Future<void> unbind(String eventName) async {
     _eventCallbacks.remove(this.name + eventName);
-
-    if (_eventCallbacks.isEmpty) {
-      _eventStreamSubscription.cancel();
-    }
 
     await _mChannel.invokeMethod('unbind', {
       'channelName': this.name,

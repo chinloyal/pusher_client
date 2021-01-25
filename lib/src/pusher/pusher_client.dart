@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/services.dart';
 import 'package:pusher_client/pusher_client.dart';
+import 'package:pusher_client/src/contracts/stream_handler.dart';
 import 'package:pusher_client/src/models/connection_error.dart';
 import 'package:pusher_client/src/models/connection_state_change.dart';
 import 'package:pusher_client/src/models/event_stream_result.dart';
@@ -15,16 +16,14 @@ part 'pusher_client.g.dart';
 /// created automatically unless [autoConnect] is set to false,
 /// if auto connect is disabled this means you can call
 /// `connect()` at a later point.
-class PusherClient {
+class PusherClient extends StreamHandler {
   static const MethodChannel _channel =
       const MethodChannel('com.github.chinloyal/pusher_client');
-  static const EventChannel _eventStream =
-      const EventChannel('com.github.chinloyal/pusher_client_stream');
+  static const classId = 'PusherClient';
 
   static PusherClient _singleton;
   void Function(ConnectionStateChange) _onConnectionStateChange;
   void Function(ConnectionError) _onConnectionError;
-  StreamSubscription _eventStreamSubscription;
   String _socketId;
 
   PusherClient._(
@@ -58,8 +57,7 @@ class PusherClient {
   }
 
   Future _init(String appKey, PusherOptions options, InitArgs initArgs) async {
-    _singleton._eventStreamSubscription =
-        _eventStream.receiveBroadcastStream().listen(_eventHandler);
+    registerListener(classId, _eventHandler);
     await _channel.invokeMethod(
       'init',
       jsonEncode({
@@ -98,7 +96,7 @@ class PusherClient {
   Future disconnect() async {
     await _channel.invokeMethod('disconnect');
 
-    _eventStreamSubscription.cancel();
+    cancelEventChannelStream();
   }
 
   /// The id of the current connection
