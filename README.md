@@ -45,7 +45,7 @@ Add to your pubspec.yaml
 
 ```yaml
 dependencies:
-    pusher_client: ^1.1.2
+    pusher_client: ^1.1.3
 ```
 
 ## Configuration
@@ -154,7 +154,7 @@ channel.bind("order-status-updated", (PusherEvent event) {
     print(event.data);
 });
 
-// Unsubscibe from channel
+// Unsubscribe from channel
 pusher.unsubscribe("private-orders");
 
 // Disconnect from pusher service

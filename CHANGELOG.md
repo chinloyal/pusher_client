@@ -1,3 +1,7 @@
+## 1.1.3 - January 24, 2021
+* BUGFIX: Binding to channel events cancels calls to onConnectionStateChange
+* Added a Stream Handler contract to allow multiple classes to listen to the same event channel
+
 ## 1.1.2 - January 20, 2021
 * PATCH: Removed log4j dependency for android
 
