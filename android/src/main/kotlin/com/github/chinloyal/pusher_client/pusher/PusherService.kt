@@ -125,11 +125,6 @@ class PusherService : MChannel {
         result.success(null)
     }
 
-    private fun reconnect(result: Result) {
-        _pusherInstance?.connect()
-        result.success(null)
-    }
-
     private fun disconnect(result: Result) {
         _pusherInstance?.disconnect()
         debugLog("Disconnect")
