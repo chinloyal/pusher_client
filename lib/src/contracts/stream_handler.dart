@@ -12,6 +12,8 @@ abstract class StreamHandler {
   /// Add a listener to the event channel stream for pusher,
   /// any class that extends [StreamHandler] should use this method.
   void registerListener(String classId, dynamic Function(dynamic) method) {
+    _eventStreamSubscription?.cancel();
+
     StreamHandler._listeners[classId] = method;
 
     _eventStreamSubscription =

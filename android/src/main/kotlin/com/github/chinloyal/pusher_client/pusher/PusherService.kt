@@ -29,6 +29,7 @@ const val PRESENCE_PREFIX = "presence-"
 
 class PusherService : MChannel {
     private var _pusherInstance: Pusher? = null
+    private var _connectionListener: ConnectionListener = ConnectionListener()
 
     companion object {
         var enableLogging: Boolean = false
@@ -120,7 +121,12 @@ class PusherService : MChannel {
     }
 
     private fun connect(result: Result) {
-        _pusherInstance?.connect(ConnectionListener(), ConnectionState.ALL)
+        _pusherInstance?.connect(_connectionListener, ConnectionState.ALL)
+        result.success(null)
+    }
+
+    private fun reconnect(result: Result) {
+        _pusherInstance?.connect()
         result.success(null)
     }
 
@@ -174,7 +180,7 @@ class PusherService : MChannel {
     private fun unsubscribe(call: MethodCall, result: Result) {
         try {
             val src = call.arguments as Map<String, Any>
-            val args = JSONObject(src);
+            val args = JSONObject(src)
             val channelName = args.getString("channelName")
 
             _pusherInstance?.unsubscribe(channelName)

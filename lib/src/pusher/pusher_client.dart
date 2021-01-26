@@ -57,7 +57,6 @@ class PusherClient extends StreamHandler {
   }
 
   Future _init(String appKey, PusherOptions options, InitArgs initArgs) async {
-    registerListener(classId, _eventHandler);
     await _channel.invokeMethod(
       'init',
       jsonEncode({
@@ -89,6 +88,8 @@ class PusherClient extends StreamHandler {
   /// Initiates a connection attempt using the client's
   /// existing connection details
   Future connect() async {
+    registerListener(classId, _eventHandler);
+
     await _channel.invokeMethod('connect');
   }
 
