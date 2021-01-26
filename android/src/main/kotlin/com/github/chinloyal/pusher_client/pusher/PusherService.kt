@@ -29,7 +29,7 @@ const val PRESENCE_PREFIX = "presence-"
 
 class PusherService : MChannel {
     private var _pusherInstance: Pusher? = null
-    private var _connectionListener: ConnectionListener = ConnectionListener()
+    private var _connectionListener: ConnectionListener? = null
 
     companion object {
         var enableLogging: Boolean = false
@@ -76,6 +76,8 @@ class PusherService : MChannel {
     }
 
     private fun init(call: MethodCall, result: Result) {
+        _connectionListener = ConnectionListener()
+
         // toString works because this is json encoded in dart
         val args = JSONObject(call.arguments.toString())
         val initArgs: JSONObject = args.getJSONObject("initArgs")
