@@ -5,9 +5,9 @@ import 'package:pusher_client/src/pusher/pusher_event.dart';
 part 'event_stream_result.g.dart';
 
 class EventStreamResult {
-  final ConnectionStateChange connectionStateChange;
-  final ConnectionError connectionError;
-  final PusherEvent pusherEvent;
+  final ConnectionStateChange? connectionStateChange;
+  final ConnectionError? connectionError;
+  final PusherEvent? pusherEvent;
 
   EventStreamResult({
     this.connectionStateChange,
