@@ -11,8 +11,8 @@ class Channel extends StreamHandler {
       const MethodChannel('com.github.chinloyal/pusher_client');
   static const classId = 'Channel';
 
-  static Map<String, void Function(PusherEvent)> _eventCallbacks =
-      Map<String, void Function(PusherEvent)>();
+  static Map<String, void Function(PusherEvent?)> _eventCallbacks =
+      Map<String, void Function(PusherEvent?)>();
 
   final String name;
 
@@ -31,7 +31,7 @@ class Channel extends StreamHandler {
   /// [eventName] is received on this channel.
   Future<void> bind(
     String eventName,
-    void Function(PusherEvent event) onEvent,
+    void Function(PusherEvent? event) onEvent,
   ) async {
     registerListener(classId, _eventHandler);
     _eventCallbacks[this.name + eventName] = onEvent;
@@ -80,7 +80,7 @@ class Channel extends StreamHandler {
 
     if (result.isPusherEvent) {
       var callback = _eventCallbacks[
-          result.pusherEvent.channelName + result.pusherEvent.eventName];
+          result.pusherEvent!.channelName! + result.pusherEvent!.eventName!];
       if (callback != null) {
         callback(result.pusherEvent);
       }

@@ -21,10 +21,10 @@ class PusherClient extends StreamHandler {
       const MethodChannel('com.github.chinloyal/pusher_client');
   static const classId = 'PusherClient';
 
-  static PusherClient _singleton;
-  void Function(ConnectionStateChange) _onConnectionStateChange;
-  void Function(ConnectionError) _onConnectionError;
-  String _socketId;
+  static PusherClient? _singleton;
+  void Function(ConnectionStateChange?)? _onConnectionStateChange;
+  void Function(ConnectionError?)? _onConnectionError;
+  String? _socketId;
 
   PusherClient._(
     String appKey,
@@ -49,11 +49,11 @@ class PusherClient extends StreamHandler {
 
     final initArgs = InitArgs(enableLogging: enableLogging);
 
-    _singleton._init(appKey, options, initArgs);
+    _singleton!._init(appKey, options, initArgs);
 
-    if (autoConnect) _singleton.connect();
+    if (autoConnect) _singleton!.connect();
 
-    return _singleton;
+    return _singleton!;
   }
 
   Future _init(String appKey, PusherOptions options, InitArgs initArgs) async {
@@ -100,20 +100,20 @@ class PusherClient extends StreamHandler {
   }
 
   /// The id of the current connection
-  String getSocketId() => _socketId;
+  String? getSocketId() => _socketId;
 
   /// Callback that is fired whenever the connection state of the
   /// connection changes. The state typically changes during connection
   /// to Pusher and during disconnection and reconnection.
   void onConnectionStateChange(
-      void Function(ConnectionStateChange state) callback) {
+      void Function(ConnectionStateChange? state) callback) {
     _onConnectionStateChange = callback;
   }
 
   /// Callback that indicates either:
   /// - An error message has been received from Pusher, or
   /// - An error has occurred in the client library.
-  void onConnectionError(void Function(ConnectionError error) callback) {
+  void onConnectionError(void Function(ConnectionError? error) callback) {
     _onConnectionError = callback;
   }
 
@@ -124,18 +124,18 @@ class PusherClient extends StreamHandler {
       _socketId = await _channel.invokeMethod('getSocketId');
 
       if (_onConnectionStateChange != null)
-        _onConnectionStateChange(result.connectionStateChange);
+        _onConnectionStateChange!(result.connectionStateChange);
     }
 
     if (result.isConnectionError) {
       if (_onConnectionError != null)
-        _onConnectionError(result.connectionError);
+        _onConnectionError!(result.connectionError);
     }
   }
 }
 
 class InitArgs {
-  final bool enableLogging;
+  final bool? enableLogging;
 
   InitArgs({
     this.enableLogging,
