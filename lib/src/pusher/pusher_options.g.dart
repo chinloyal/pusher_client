@@ -7,15 +7,15 @@ PusherOptions _$PusherOptionsFromJson(Map<String, dynamic> json) {
     auth: json['auth'] == null
         ? null
         : PusherAuth.fromJson(json['auth'] as Map<String, dynamic>),
-    cluster: json['cluster'] as String,
-    host: json['host'] as String,
-    wsPort: json['wsPort'] as int,
-    wssPort: json['wssPort'] as int,
-    encrypted: json['encrypted'] as bool,
-    activityTimeout: json['activityTimeout'] as int,
-    pongTimeout: json['pongTimeout'] as int,
-    maxReconnectionAttempts: json['maxReconnectionAttempts'] as int,
-    maxReconnectGapInSeconds: json['maxReconnectGapInSeconds'] as int,
+    cluster: json['cluster'] as String?,
+    host: json['host'] as String?,
+    wsPort: json['wsPort'] as int?,
+    wssPort: json['wssPort'] as int?,
+    encrypted: json['encrypted'] as bool?,
+    activityTimeout: json['activityTimeout'] as int?,
+    pongTimeout: json['pongTimeout'] as int?,
+    maxReconnectionAttempts: json['maxReconnectionAttempts'] as int?,
+    maxReconnectGapInSeconds: json['maxReconnectGapInSeconds'] as int?,
   );
 }
 

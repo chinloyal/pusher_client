@@ -6,13 +6,14 @@ import 'package:pusher_client/src/contracts/stream_handler.dart';
 import 'package:pusher_client/src/models/event_stream_result.dart';
 import 'package:pusher_client/src/pusher/pusher_event.dart';
 
+typedef EventCallback = Map<String, void Function(PusherEvent?)>;
+
 class Channel extends StreamHandler {
   static const MethodChannel _mChannel =
       const MethodChannel('com.github.chinloyal/pusher_client');
   static const classId = 'Channel';
 
-  static Map<String, void Function(PusherEvent)> _eventCallbacks =
-      Map<String, void Function(PusherEvent)>();
+  static EventCallback _eventCallbacks = EventCallback();
 
   final String name;
 
@@ -31,7 +32,7 @@ class Channel extends StreamHandler {
   /// [eventName] is received on this channel.
   Future<void> bind(
     String eventName,
-    void Function(PusherEvent event) onEvent,
+    void Function(PusherEvent? event) onEvent,
   ) async {
     registerListener(classId, _eventHandler);
     _eventCallbacks[this.name + eventName] = onEvent;
@@ -80,7 +81,7 @@ class Channel extends StreamHandler {
 
     if (result.isPusherEvent) {
       var callback = _eventCallbacks[
-          result.pusherEvent.channelName + result.pusherEvent.eventName];
+          result.pusherEvent!.channelName! + result.pusherEvent!.eventName!];
       if (callback != null) {
         callback(result.pusherEvent);
       }
