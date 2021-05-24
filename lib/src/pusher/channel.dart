@@ -6,13 +6,14 @@ import 'package:pusher_client/src/contracts/stream_handler.dart';
 import 'package:pusher_client/src/models/event_stream_result.dart';
 import 'package:pusher_client/src/pusher/pusher_event.dart';
 
+typedef EventCallback = Map<String, void Function(PusherEvent?)>;
+
 class Channel extends StreamHandler {
   static const MethodChannel _mChannel =
       const MethodChannel('com.github.chinloyal/pusher_client');
   static const classId = 'Channel';
 
-  static Map<String, void Function(PusherEvent?)> _eventCallbacks =
-      Map<String, void Function(PusherEvent?)>();
+  static EventCallback _eventCallbacks = EventCallback();
 
   final String name;
 
