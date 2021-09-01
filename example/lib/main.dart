@@ -69,25 +69,25 @@ class _MyAppState extends State<MyApp> {
         body: Center(
             child: Column(
           children: [
-            RaisedButton(
+            ElevatedButton(
               child: Text('Unsubscribe Private Orders'),
               onPressed: () {
                 pusher.unsubscribe('private-orders');
               },
             ),
-            RaisedButton(
+            ElevatedButton(
               child: Text('Unbind Status Update'),
               onPressed: () {
                 channel.unbind('status-update');
               },
             ),
-            RaisedButton(
+            ElevatedButton(
               child: Text('Unbind Order Filled'),
               onPressed: () {
                 channel.unbind('order-filled');
               },
             ),
-            RaisedButton(
+            ElevatedButton(
               child: Text('Bind Status Update'),
               onPressed: () {
                 channel.bind('status-update', (PusherEvent event) {
@@ -95,7 +95,7 @@ class _MyAppState extends State<MyApp> {
                 });
               },
             ),
-            RaisedButton(
+            ElevatedButton(
               child: Text('Trigger Client Typing'),
               onPressed: () {
                 channel.trigger('client-istyping', {'name': 'Bob'});

@@ -1,3 +1,7 @@
+## 2.0.0 - August 31, 2021
+
+* Upgraded to null safety [@nizwar](https://github.com/nizwar)
+
 ## 1.1.3 - January 24, 2021
 * BUGFIX: Binding to channel events cancels calls to onConnectionStateChange
 * Added a Stream Handler contract to allow multiple classes to listen to the same event channel
