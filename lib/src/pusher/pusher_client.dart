@@ -26,12 +26,24 @@ class PusherClient extends StreamHandler {
   void Function(ConnectionError?)? _onConnectionError;
   String? _socketId;
 
-  PusherClient._(
+ /* PusherClient._(
     String appKey,
     PusherOptions options, {
     bool enableLogging = true,
     bool autoConnect = true,
   });
+
+   plugin:
+    platforms:
+      android:
+        package: com.github.chinloyal.pusher_client
+        pluginClass: PusherClientPlugin
+      ios:
+        pluginClass: PusherClientPlugin
+
+
+
+  */
 
   //String? appKey;
   //PusherOptions? options;
@@ -42,7 +54,7 @@ class PusherClient extends StreamHandler {
     PusherOptions options, {
     bool enableLogging = true,
     bool autoConnect = true,
-  }) {
+  }); /*{
     _singleton ??= PusherClient._(
       appKey,
       options,
@@ -57,7 +69,7 @@ class PusherClient extends StreamHandler {
     if (autoConnect) _singleton!.connect();
 
     // return _singleton!;
-  }
+  } */
 
   //String getAppKey() => appKey!;
 
