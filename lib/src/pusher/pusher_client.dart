@@ -26,20 +26,20 @@ class PusherClient extends StreamHandler {
   void Function(ConnectionError?)? _onConnectionError;
   String? _socketId;
 
-  PusherClient._(
+  /*PusherClient._(
     String appKey,
     PusherOptions options, {
     bool enableLogging = true,
     bool autoConnect = true,
-  });
+  });*/
 
   /// Creates a [PusherClient] -- returns the instance if it's already be called.
-  factory PusherClient(
+   PusherClient(
     String appKey,
     PusherOptions options, {
     bool enableLogging = true,
     bool autoConnect = true,
-  }) {
+  }); /*{
     _singleton ??= PusherClient._(
       appKey,
       options,
@@ -54,7 +54,7 @@ class PusherClient extends StreamHandler {
     if (autoConnect) _singleton!.connect();
 
     return _singleton!;
-  }
+  }*/
 
   Future _init(String appKey, PusherOptions options, InitArgs initArgs) async {
     registerListener(classId, _eventHandler);
