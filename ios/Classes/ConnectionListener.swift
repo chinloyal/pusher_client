@@ -5,7 +5,7 @@
 //  Created by Romario Chinloy on 10/27/20.
 //
 
-import PusherSwiftWithEncryption
+import PusherSwift
 
 class ConnectionListener: PusherDelegate {
     static let `default`: ConnectionListener = ConnectionListener()
