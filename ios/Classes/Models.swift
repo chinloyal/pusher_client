@@ -27,6 +27,7 @@ struct PusherOptions: Codable {
 struct PusherAuth: Codable {
     var endpoint: String
     var headers: [String: String]
+    var params: [String: String]?
 }
 
 struct InitArgs: Codable {

@@ -16,6 +16,7 @@ import io.flutter.plugin.common.EventChannel.EventSink
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.Result
+import org.json.JSONArray
 import org.json.JSONObject
 import java.lang.Exception
 
@@ -88,12 +89,26 @@ class PusherService : MChannel {
             if (!options.isNull("auth")) {
                 val auth: JSONObject = options.getJSONObject("auth")
                 val endpoint: String = auth.getString("endpoint")
-                val headersMap: Map<String, String> = Gson().fromJson<Map<String, String>>(auth.getString("headers"), Map::class.java)
+
+                val jsonObj = JSONObject(auth.getString("headers"))
+                val headersMap = jsonObj.toMap()
+                //Creates a UrlEncodedConnectionFactory with provided "params" if not null.
+                fun getUrlEncodedConnectionFactory( jsonParameters:String?): UrlEncodedConnectionFactory {
+                    return if(jsonParameters==null) {
+                        UrlEncodedConnectionFactory()
+                    }else{
+                        val paramsMap = JSONObject(jsonParameters).toMap()
+                        UrlEncodedConnectionFactory(paramsMap as MutableMap<String, String>?)
+                    }
+
+                }
                 val encodedConnectionFactory = if (headersMap.containsValue("application/json"))
-                    JsonEncodedConnectionFactory() else UrlEncodedConnectionFactory()
+                    JsonEncodedConnectionFactory() else getUrlEncodedConnectionFactory(auth.optString("params"))
+
+
 
                 val authorizer = HttpAuthorizer(endpoint,  encodedConnectionFactory)
-                authorizer.setHeaders(headersMap)
+                authorizer.setHeaders(headersMap as MutableMap<String, String>?)
 
                 pusherOptions.authorizer = authorizer
             }
@@ -294,4 +309,17 @@ class PusherService : MChannel {
         }
     }
 
+    private fun JSONObject.toMap(): Map<String, *> = keys().asSequence().associateWith {
+        when (val value = this[it])
+        {
+            is JSONArray ->
+            {
+                val map = (0 until value.length()).associate { Pair(it.toString(), value[it]) }
+                JSONObject(map).toMap().values.toList()
+            }
+            is JSONObject -> value.toMap()
+            JSONObject.NULL -> null
+            else            -> value
+        }
+    }
 }

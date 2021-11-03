@@ -8,11 +8,11 @@ PusherAuth _$PusherAuthFromJson(Map<String, dynamic> json) {
     headers: (json['headers'] as Map<String, dynamic>?)?.map(
       (k, e) => MapEntry(k, e as String),
     ),
+    params: (json['params'] as Map<String, dynamic>?)?.map(
+      (k, e) => MapEntry(k, e as String),
+    ),
   );
 }
 
 Map<String, dynamic> _$PusherAuthToJson(PusherAuth instance) =>
-    <String, dynamic>{
-      'endpoint': instance.endpoint,
-      'headers': instance.headers,
-    };
+    <String, dynamic>{'endpoint': instance.endpoint, 'headers': instance.headers, 'params': instance.params};
