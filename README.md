@@ -15,7 +15,7 @@ This client works with official pusher servers and laravel self hosted pusher we
 ## Supported Platforms & Deployment Targets
 
 - Android API 16 and above
-- iOS 9.0 and above
+- iOS 13.0 and above
 
 ## Table of Contents
 

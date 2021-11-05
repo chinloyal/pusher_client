@@ -5,7 +5,7 @@
 //  Created by Romario Chinloy on 10/31/20.
 //
 import Foundation
-import PusherSwiftWithEncryption
+import PusherSwift
 
 class ChannelEventListener {
     static let `default`: ChannelEventListener = ChannelEventListener()
