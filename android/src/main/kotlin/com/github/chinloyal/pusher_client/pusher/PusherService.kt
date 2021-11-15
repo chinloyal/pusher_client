@@ -80,7 +80,6 @@ class PusherService : MChannel {
         val initArgs: JSONObject = args.getJSONObject("initArgs")
         enableLogging = initArgs.getBoolean("enableLogging")
 
-        if(_pusherInstance == null) {
             val options: JSONObject = args.getJSONObject("pusherOptions")
             val pusherOptions = PusherOptions()
 
@@ -114,7 +113,6 @@ class PusherService : MChannel {
             _pusherInstance = Pusher(args.getString("appKey"), pusherOptions)
 
             debugLog("Pusher initialized")
-        }
 
         result.success(null)
     }
@@ -127,7 +125,6 @@ class PusherService : MChannel {
     private fun disconnect(result: Result) {
         _pusherInstance?.disconnect()
         debugLog("Disconnect")
-        _pusherInstance = null
         result.success(null)
     }
 
