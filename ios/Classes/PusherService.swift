@@ -107,6 +107,7 @@ class PusherService: MChannel {
     func disconnect(result:@escaping FlutterResult) {
         _pusherInstance.disconnect()
         Utils.debugLog(msg: "Disconnect")
+        _pusherInstance = nil
         result(nil)
     }
     
