@@ -73,7 +73,6 @@ class PusherService: MChannel {
             
             Utils.enableLogging = pusherArgs.initArgs.enableLogging
             
-            if(_pusherInstance == nil) {
                 let pusherOptions = PusherClientOptions(
                     authMethod: pusherArgs.pusherOptions.auth == nil ? .noMethod : AuthMethod.authRequestBuilder(authRequestBuilder: AuthRequestBuilder(pusherAuth: pusherArgs.pusherOptions.auth!)),
                     host: pusherArgs.pusherOptions.cluster != nil ? .cluster(pusherArgs.pusherOptions.cluster!) : .host(pusherArgs.pusherOptions.host),
@@ -91,7 +90,6 @@ class PusherService: MChannel {
                 Utils.debugLog(msg: "Pusher initialized")
                 
                 result(nil)
-            }
         } catch let err {
             Utils.errorLog(msg: err.localizedDescription)
             result(FlutterError(code: "INIT_ERROR", message: err.localizedDescription, details: err))
