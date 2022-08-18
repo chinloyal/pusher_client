@@ -176,8 +176,8 @@ class PusherService: MChannel {
         
         if(callBackId != nil) {
             if(!channelName.starts(with: PusherService.PRESENCE_PREFIX)) {
-                channel = _pusherInstance.connection.channels.find(name: channelName)!
-                channel.unbind(eventName: eventName, callbackId: callBackId!)
+                let _channel = _pusherInstance.connection.channels.find(name: channelName)
+                _channel?.unbind(eventName: eventName, callbackId: callBackId!)
             } else {
                 channel = _pusherInstance.connection.channels.findPresence(name: channelName)!
                 channel.unbind(eventName: eventName, callbackId: callBackId!)
