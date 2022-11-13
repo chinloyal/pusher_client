@@ -39,7 +39,16 @@ class ConnectionListener: PusherDelegate {
         
     }
     
-//    func debugLog(message: String) {
-//        PusherService.Utils.debugLog(msg: message)
-//    }
+   func debugLog(message: String) {
+       PusherService.Utils.debugLog(msg: message)
+   }
+    
+   func subscribedToChannel(name: String) {
+       PusherService.Utils.debugLog(msg: "[SUBSCRIPTION]: Subscribed to \(name)")
+   }
+    
+   func failedToSubscribeToChannel(name: String, response: URLResponse?, data: String?, error: NSError?) {
+       PusherService.Utils.debugLog(msg: "[FAILED_SUBSCRIPTION]: Failed subscribing to \(name)")
+       PusherService.Utils.debugLog(msg: error?.localizedDescription)
+   }
 }
