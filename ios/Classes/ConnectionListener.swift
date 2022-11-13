@@ -49,6 +49,6 @@ class ConnectionListener: PusherDelegate {
     
    func failedToSubscribeToChannel(name: String, response: URLResponse?, data: String?, error: NSError?) {
        PusherService.Utils.debugLog(msg: "[FAILED_SUBSCRIPTION]: Failed subscribing to \(name)")
-       PusherService.Utils.debugLog(msg: error?.localizedDescription)
+       print(error)
    }
 }
