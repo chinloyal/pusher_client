@@ -15,6 +15,10 @@ class AuthRequestBuilder: AuthRequestBuilderProtocol {
     }
     
     func requestFor(socketID: String, channelName: String) -> URLRequest? {
+        print("Socket ID: \(socketID)")
+        print("channelName: \(channelName)")
+        print("URL: \(pusherAuth.endpoint)")
+        
         var request = URLRequest(url: URL(string: pusherAuth.endpoint)!)
         request.httpMethod = "POST"
         do {
