@@ -164,11 +164,13 @@ class PusherService: MChannel {
         var channel: PusherChannel
         
         if(!channelName.starts(with: PusherService.PRESENCE_PREFIX)) {
-            channel = _pusherInstance.connection.channels.find(name: channelName)!
-            bindedEvents[channelName + eventName] = channel.bind(eventName: eventName, eventCallback: ChannelEventListener.default.onEvent)
+            channel = _pusherInstance.connection.channels.find(name: channelName)
+            guard let _channel = channel else { return }
+            bindedEvents[channelName + eventName] = _channel.bind(eventName: eventName, eventCallback: ChannelEventListener.default.onEvent)
         } else {
-            channel = _pusherInstance.connection.channels.findPresence(name: channelName)!
-            bindedEvents[channelName + eventName] = channel.bind(eventName: eventName, eventCallback: ChannelEventListener.default.onEvent)
+            channel = _pusherInstance.connection.channels.findPresence(name: channelName)
+            guard let _channel = channel else { return }
+            bindedEvents[channelName + eventName] = _channel.bind(eventName: eventName, eventCallback: ChannelEventListener.default.onEvent)
         }
         
         Utils.debugLog(msg: "[BIND] \(eventName)")
@@ -184,11 +186,13 @@ class PusherService: MChannel {
         
         if(callBackId != nil) {
             if(!channelName.starts(with: PusherService.PRESENCE_PREFIX)) {
-                channel = _pusherInstance.connection.channels.find(name: channelName)!
-                channel.unbind(eventName: eventName, callbackId: callBackId!)
+                channel = _pusherInstance.connection.channels.find(name: channelName)
+                guard let _channel = channel else { return }
+                _channel.unbind(eventName: eventName, callbackId: callBackId!)
             } else {
-                channel = _pusherInstance.connection.channels.findPresence(name: channelName)!
-                channel.unbind(eventName: eventName, callbackId: callBackId!)
+                channel = _pusherInstance.connection.channels.findPresence(name: channelName)
+                guard let _channel = channel else { return }
+                _channel.unbind(eventName: eventName, callbackId: callBackId!)
             }
         }
         
