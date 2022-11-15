@@ -45,7 +45,7 @@ class ConnectionListener: ConnectionEventListener {
                         "exception" to ex?.message
                 ))
 
-                debugLog("[ON_ERROR]: message: $message, code: $code")
+                debugLog("[ON_ERROR]: message: $message, code: $code, exception: $exception")
 
                 eventStreamJson.put("connectionError", connectionError)
                 PusherService.eventSink?.success(eventStreamJson.toString())
