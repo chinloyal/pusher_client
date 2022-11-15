@@ -120,8 +120,10 @@ class PusherService: MChannel {
         var channel: PusherChannel
         
         if(!channelName.starts(with: PusherService.PRESENCE_PREFIX)) {
-            channel = _pusherInstance.subscribe(
-                channelName,
+            channel = _pusherInstance.subscribe(channelName)
+        } else {
+            channel = _pusherInstance.subscribeToPresenceChannel(
+                channelName: channelName,
                 onMemberAdded: { (member: PusherPresenceChannelMember) in
                      ChannelEventListener.default.onMemberAdded(channelName: channelName, member: member)
                 },
@@ -129,8 +131,6 @@ class PusherService: MChannel {
                      ChannelEventListener.default.onMemberRemoved(channelName: channelName, member: member)
                 }
             )
-        } else {
-            channel = _pusherInstance.subscribeToPresenceChannel(channelName: channelName)
             for pEvent in Constants.PresenceEvents.allCases {
                 channel.bind(eventName: pEvent.rawValue, eventCallback: ChannelEventListener.default.onEvent)
             }
