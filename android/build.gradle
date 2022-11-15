@@ -38,7 +38,7 @@ android {
     }
 
     dependencies {
-        implementation "com.pusher:pusher-java-client:2.2.6"
+        implementation "com.pusher:pusher-java-client:2.4.4"
     }
 }
 
