@@ -20,10 +20,3 @@ dev_dependencies:
     sdk: flutter
 
 flutter:
-  plugin:
-    platforms:
-      android:
-        package: com.github.chinloyal.pusher_client
-        pluginClass: PusherClientPlugin
-      ios:
-        pluginClass: PusherClientPlugin

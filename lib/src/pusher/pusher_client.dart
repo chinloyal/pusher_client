@@ -21,25 +21,40 @@ class PusherClient extends StreamHandler {
       const MethodChannel('com.github.chinloyal/pusher_client');
   static const classId = 'PusherClient';
 
-  static PusherClient? _singleton;
+  // static PusherClient? _singleton;
   void Function(ConnectionStateChange?)? _onConnectionStateChange;
   void Function(ConnectionError?)? _onConnectionError;
   String? _socketId;
 
-  PusherClient._(
+  /* PusherClient._(
     String appKey,
     PusherOptions options, {
     bool enableLogging = true,
     bool autoConnect = true,
   });
 
+   plugin:
+    platforms:
+      android:
+        package: com.github.chinloyal.pusher_client
+        pluginClass: PusherClientPlugin
+      ios:
+        pluginClass: PusherClientPlugin
+
+
+
+  */
+
+  //String? appKey;
+  //PusherOptions? options;
+
   /// Creates a [PusherClient] -- returns the instance if it's already be called.
-  factory PusherClient(
+  /* PusherClient(
     String appKey,
     PusherOptions options, {
     bool enableLogging = true,
     bool autoConnect = true,
-  }) {
+  });*/ /*{
     _singleton ??= PusherClient._(
       appKey,
       options,
@@ -53,10 +68,15 @@ class PusherClient extends StreamHandler {
 
     if (autoConnect) _singleton!.connect();
 
-    return _singleton!;
-  }
+    // return _singleton!;
+  } */
+
+  //String getAppKey() => appKey!;
+
+  // PusherOptions getOptions() => options!;
 
   Future _init(String appKey, PusherOptions options, InitArgs initArgs) async {
+    print("PUSHERRRR CONNECTTTTT");
     registerListener(classId, _eventHandler);
     await _channel.invokeMethod(
       'init',
