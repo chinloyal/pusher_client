@@ -27,21 +27,22 @@ apply plugin: 'kotlin-android'
 android {
     compileSdkVersion 29
 
+    namespace 'com.pusher.client' // ✅ Correct placement: inside `android {}`
+
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
+
     defaultConfig {
         minSdkVersion 16
     }
+
     lintOptions {
         disable 'InvalidPackage'
-    }
-
-    dependencies {
-        implementation "com.pusher:pusher-java-client:2.2.5"
     }
 }
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "com.pusher:pusher-java-client:2.2.5"
 }
