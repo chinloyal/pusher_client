@@ -1,7 +1,10 @@
-library pusher_client;
+/// A Pusher Channels client for Flutter (Android, iOS, macOS and web).
+library;
 
-export 'src/pusher/channel.dart';
-export 'src/pusher/pusher_auth.dart';
-export 'src/pusher/pusher_options.dart';
-export 'src/pusher/pusher_client.dart' show PusherClient;
-export 'src/pusher/pusher_event.dart';
+export 'src/auth.dart'
+    show PusherAuth, PusherAuthorizer, PusherAuthorizationData;
+export 'src/channel.dart' show Channel, PresenceChannel;
+export 'src/models.dart'
+    show ConnectionError, ConnectionStateChange, PusherEvent, PusherException;
+export 'src/options.dart' show PusherOptions;
+export 'src/pusher_client.dart' show PusherClient;

@@ -1,9 +1,11 @@
 .DS_Store
 .dart_tool/
-
 .packages
 .pub/
-
 build/
 .idea/
-.fvm/**
+*.iml
+.fvm/
+.claude-work/
+pubspec.lock
+coverage/
