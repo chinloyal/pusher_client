@@ -7,5 +7,5 @@ build/
 *.iml
 .fvm/
 .claude-work/
-pubspec.lock
+/pubspec.lock
 coverage/
