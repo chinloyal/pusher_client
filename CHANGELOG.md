@@ -1,4 +1,4 @@
-## 3.0.1 - Unreleased
+## 3.0.1 - November 23, 2026
 
 ### Fixed
 
