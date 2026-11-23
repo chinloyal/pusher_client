@@ -1,3 +1,13 @@
+## 3.0.1 - Unreleased
+
+### Fixed
+
+* iOS/macOS: event `data` sent by the server as a JSON value (object, array, number or boolean) instead of a JSON-encoded string arrived as `null` (PusherSwift only accepts string data). It is now delivered as a JSON string, as on Android and web. Numeric `user_id`s are delivered as strings too. Seen with laravel-websockets and soketi (#56).
+
+### Changed
+
+* Android: tests confirm pusher-websocket-java 2.4.5 delivers such data as a JSON string (the original #56 crash was in 2.2.5).
+
 ## 3.0.0 - November 22, 2026
 
 Complete rewrite of the platform layer. See [MIGRATION.md](MIGRATION.md) for upgrade instructions.

@@ -25,7 +25,7 @@ Flutter plugin wrapping pusher-websocket-swift. Shared Swift implementation for 
   s.ios.dependency 'Flutter'
   s.osx.dependency 'FlutterMacOS'
   s.dependency 'PusherSwift', '~> 10.1.10'
-  # Same constraint PusherSwift 10.1.10 uses; imported for SubscriptionDataNormalizer.
+  # Same constraint PusherSwift 10.1.10 uses; imported for IncomingMessageNormalizer.
   s.dependency 'NWWebSocket', '~> 0.5.10'
 
   # Flutter.framework does not contain a i386 slice.

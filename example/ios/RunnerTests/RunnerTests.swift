@@ -445,11 +445,11 @@ class RunnerTests: XCTestCase {
     return (try? JSONSerialization.jsonObject(with: data)) as? [String: Any]
   }
 
-  // MARK: - SubscriptionDataNormalizer
+  // MARK: - IncomingMessageNormalizer
 
   func testNormalizerAddsDataToDataLessSubscriptionSucceeded() throws {
     let raw = #"{"event":"pusher_internal:subscription_succeeded","channel":"private-a"}"#
-    let out = SubscriptionDataNormalizer.normalize(raw)
+    let out = IncomingMessageNormalizer.normalize(raw)
     let json = try XCTUnwrap(
       JSONSerialization.jsonObject(with: Data(out.utf8)) as? [String: Any])
     XCTAssertEqual(json["event"] as? String, "pusher_internal:subscription_succeeded")
@@ -460,7 +460,7 @@ class RunnerTests: XCTestCase {
   func testNormalizerTreatsNullDataAsMissing() throws {
     let raw = #"{"event":"pusher_internal:subscription_succeeded","channel":"a","data":null}"#
     let json = try XCTUnwrap(
-      JSONSerialization.jsonObject(with: Data(SubscriptionDataNormalizer.normalize(raw).utf8))
+      JSONSerialization.jsonObject(with: Data(IncomingMessageNormalizer.normalize(raw).utf8))
         as? [String: Any])
     XCTAssertEqual(json["data"] as? String, "{}")
   }
@@ -468,13 +468,89 @@ class RunnerTests: XCTestCase {
   func testNormalizerLeavesMessagesWithDataUntouched() {
     let presence =
       #"{"event":"pusher_internal:subscription_succeeded","channel":"presence-a","data":"{\"presence\":{\"count\":1}}"}"#
-    XCTAssertEqual(SubscriptionDataNormalizer.normalize(presence), presence)
+    XCTAssertEqual(IncomingMessageNormalizer.normalize(presence), presence)
     let other = #"{"event":"my-event","channel":"a"}"#
-    XCTAssertEqual(SubscriptionDataNormalizer.normalize(other), other)
+    XCTAssertEqual(IncomingMessageNormalizer.normalize(other), other)
     let mention = #"{"event":"my-event","channel":"a","data":"pusher_internal:subscription_succeeded"}"#
-    XCTAssertEqual(SubscriptionDataNormalizer.normalize(mention), mention)
-    XCTAssertEqual(SubscriptionDataNormalizer.normalize("not json"), "not json")
+    XCTAssertEqual(IncomingMessageNormalizer.normalize(mention), mention)
+    XCTAssertEqual(IncomingMessageNormalizer.normalize("not json"), "not json")
   }
+
+  private func normalized(_ raw: String) throws -> [String: Any] {
+    try XCTUnwrap(
+      JSONSerialization.jsonObject(with: Data(IncomingMessageNormalizer.normalize(raw).utf8))
+        as? [String: Any])
+  }
+
+  private func decodedData(_ raw: String) throws -> Any {
+    let json = try normalized(raw)
+    let string = try XCTUnwrap(json["data"] as? String)
+    return try JSONSerialization.jsonObject(with: Data(string.utf8), options: .fragmentsAllowed)
+  }
+
+  func testNormalizerEncodesObjectData() throws {
+    let raw = #"{"event":"e","channel":"c","data":{"a":1,"b":{"c":"x"},"d":[1,2]}}"#
+    let decoded = try XCTUnwrap(decodedData(raw) as? NSDictionary)
+    let expected: NSDictionary = ["a": 1, "b": ["c": "x"], "d": [1, 2]]
+    XCTAssertEqual(decoded, expected)
+    XCTAssertEqual(try normalized(raw)["event"] as? String, "e")
+    XCTAssertEqual(try normalized(raw)["channel"] as? String, "c")
+  }
+
+  func testNormalizerEncodesArrayData() throws {
+    let decoded = try XCTUnwrap(decodedData(#"{"event":"e","channel":"c","data":[1,"two",{"three":3}]}"#) as? NSArray)
+    let expected: NSArray = [1, "two", ["three": 3]]
+    XCTAssertEqual(decoded, expected)
+  }
+
+  func testNormalizerEncodesNumberData() throws {
+    let json = try normalized(#"{"event":"e","channel":"c","data":42}"#)
+    XCTAssertEqual(json["data"] as? String, "42")
+    let float = try normalized(#"{"event":"e","channel":"c","data":1.5}"#)
+    XCTAssertEqual(float["data"] as? String, "1.5")
+  }
+
+  func testNormalizerEncodesBoolDataAsBool() throws {
+    XCTAssertEqual(try normalized(#"{"event":"e","channel":"c","data":true}"#)["data"] as? String, "true")
+    XCTAssertEqual(try normalized(#"{"event":"e","channel":"c","data":false}"#)["data"] as? String, "false")
+  }
+
+  func testNormalizerLeavesStringAndNullDataUntouched() {
+    let string = #"{"event":"e","channel":"c","data":"{\"a\":1}"}"#
+    XCTAssertEqual(IncomingMessageNormalizer.normalize(string), string)
+    let null = #"{"event":"e","channel":"c","data":null}"#
+    XCTAssertEqual(IncomingMessageNormalizer.normalize(null), null)
+  }
+
+  func testNormalizerStringifiesNumericUserId() throws {
+    let raw = #"{"event":"e","channel":"presence-c","data":"{}","user_id":42}"#
+    let json = try normalized(raw)
+    XCTAssertEqual(json["user_id"] as? String, "42")
+    XCTAssertEqual(json["data"] as? String, "{}")
+  }
+
+  func testNormalizerLeavesStringUserIdUntouched() {
+    let raw = #"{"event":"e","channel":"presence-c","data":"{}","user_id":"42"}"#
+    XCTAssertEqual(IncomingMessageNormalizer.normalize(raw), raw)
+  }
+
+  func testNormalizerLeavesPusherErrorUntouched() {
+    let raw = #"{"event":"pusher:error","channel":"c","data":{"code":4001,"message":"x"}}"#
+    XCTAssertEqual(IncomingMessageNormalizer.normalize(raw), raw)
+  }
+
+  func testNormalizerLeavesMessagesWithoutChannelUntouched() {
+    let raw = #"{"event":"e","data":{"a":1}}"#
+    XCTAssertEqual(IncomingMessageNormalizer.normalize(raw), raw)
+  }
+
+  func testNormalizerFixesSubscriptionSucceededRegardlessOfOtherKeys() throws {
+    let raw = #"{"event":"pusher_internal:subscription_succeeded","channel":"c","user_id":7}"#
+    let json = try normalized(raw)
+    XCTAssertEqual(json["data"] as? String, "{}")
+    XCTAssertEqual(json["user_id"] as? String, "7")
+  }
+
 
 }
 

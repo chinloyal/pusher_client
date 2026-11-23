@@ -15,7 +15,7 @@ let package = Package(
     dependencies: [
         .package(name: "FlutterFramework", path: "../FlutterFramework"),
         .package(url: "https://github.com/pusher/pusher-websocket-swift.git", .upToNextMinor(from: "10.1.10")),
-        // Same range PusherSwift 10.1.10 uses; imported for SubscriptionDataNormalizer.
+        // Same range PusherSwift 10.1.10 uses; imported for IncomingMessageNormalizer.
         .package(url: "https://github.com/pusher/NWWebSocket.git", .upToNextMajor(from: "0.5.10")),
         // PusherSwift allows any TweetNacl 1.x, but 1.3.0 raised its minimum to iOS 15 / macOS 12.
         // Constrain resolution to 1.2.x, the last line supporting iOS 13 / macOS 10.15

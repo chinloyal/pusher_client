@@ -2,7 +2,7 @@ name: pusher_client
 description: >-
   A Pusher Channels client for Flutter on Android, iOS, macOS and web. Wraps
   pusher-websocket-java, pusher-websocket-swift and pusher-js.
-version: 3.0.0
+version: 3.0.1
 homepage: https://github.com/chinloyal/pusher_client
 repository: https://github.com/chinloyal/pusher_client
 issue_tracker: https://github.com/chinloyal/pusher_client/issues

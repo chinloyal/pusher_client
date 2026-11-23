@@ -336,6 +336,12 @@ unexpected native exceptions. Unknown method names reply `notImplemented`.
 * `PusherSwift ~> 10.1.10` (CocoaPods) / `.upToNextMinor(from: "10.1.10")` (SwiftPM).
   iOS 13.0, macOS 10.15. (10.2.0 requires iOS 15.) SwiftPM also constrains
   `tweetnacl-swiftwrap` to 1.2.x because 1.3.0 requires iOS 15 / macOS 12.
+* `IncomingMessageNormalizer` (a proxy on `connection.socket.delegate`)
+  rewrites incoming frames before PusherSwift parses them: adds `"data":"{}"`
+  to data-less `pusher_internal:subscription_succeeded` (soketi 1.x,
+  laravel-websockets), JSON-encodes non-string channel-event `data` and
+  stringifies numeric `user_id` (PusherSwift reads both `as? String`).
+  `pusher:error` frames and unchanged frames pass through untouched.
 * PusherSwift ignores `unsubscribe` for channels that have not finished
   subscribing; the plugin removes those from `connection.channels` itself and
   sends `pusher:unsubscribe` when connected.
