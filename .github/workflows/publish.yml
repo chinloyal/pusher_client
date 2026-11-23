@@ -37,4 +37,15 @@ jobs:
             echo "Tag $GITHUB_REF_NAME does not match pubspec version $version" >&2
             exit 1
           fi
-      - run: flutter pub publish --force
+      - name: Skip if this version is already on pub.dev
+        id: published
+        run: |
+          version=$(grep '^version:' pubspec.yaml | awk '{print $2}')
+          if curl -fsS "https://pub.dev/api/packages/pusher_client/versions/$version" >/dev/null 2>&1; then
+            echo "pusher_client $version is already published; nothing to do."
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+      - if: steps.published.outputs.exists != 'true'
+        run: flutter pub publish --force

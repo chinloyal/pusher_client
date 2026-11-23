@@ -1,4 +1,4 @@
-## 3.0.0 - Unreleased
+## 3.0.0 - November 22, 2026
 
 Complete rewrite of the platform layer. See [MIGRATION.md](MIGRATION.md) for upgrade instructions.
 
