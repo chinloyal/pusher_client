@@ -1,0 +1,32 @@
+{
+  "pins" : [
+    {
+      "identity" : "nwwebsocket",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pusher/NWWebSocket.git",
+      "state" : {
+        "revision" : "3d3b8a24b17a0f079195031ca86af117fc158bef",
+        "version" : "0.5.10"
+      }
+    },
+    {
+      "identity" : "pusher-websocket-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pusher/pusher-websocket-swift.git",
+      "state" : {
+        "revision" : "27a9346d3f3c44f2bddf22641bf3c6d75b77d08a",
+        "version" : "10.1.10"
+      }
+    },
+    {
+      "identity" : "tweetnacl-swiftwrap",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pusher/tweetnacl-swiftwrap",
+      "state" : {
+        "revision" : "92375f83c3af1b8af011d3c0af1001929844b936",
+        "version" : "1.2.0"
+      }
+    }
+  ],
+  "version" : 2
+}

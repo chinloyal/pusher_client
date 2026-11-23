@@ -1,0 +1,21 @@
+# .pubignore replaces .gitignore for `pub publish`, so the .gitignore
+# patterns are repeated here.
+.DS_Store
+.dart_tool/
+.packages
+.pub/
+build/
+.idea/
+*.iml
+.fvm/
+
+# Not shipped to pub.dev
+AGENTS.md
+.claude-work/
+.github/
+sample.txt
+coverage/
+example/build/
+example/.dart_tool/
+example/.idea/
+example/testdata.txt

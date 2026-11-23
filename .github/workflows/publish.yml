@@ -1,0 +1,40 @@
+# Publishes to pub.dev with GitHub OIDC (no stored credentials).
+#
+# One-time setup on pub.dev (https://pub.dev/packages/pusher_client/admin):
+#   Automated publishing -> Enable publishing from GitHub Actions
+#   Repository: chinloyal/pusher_client, tag pattern: v{{version}}
+#   (optional) Require GitHub Actions environment: pub.dev, and create an
+#   environment with that name in the GitHub repo settings.
+#
+# Release: bump `version` in pubspec.yaml, then `git tag vX.Y.Z && git push origin vX.Y.Z`.
+name: Publish to pub.dev
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+*'
+
+jobs:
+  publish:
+    name: Publish
+    runs-on: ubuntu-latest
+    environment: pub.dev
+    permissions:
+      id-token: write # Required for authentication using OIDC.
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      # Exchanges the GitHub OIDC token for a pub.dev publishing token.
+      - uses: dart-lang/setup-dart@v1
+      - run: flutter pub get
+      - name: Verify tag matches pubspec version
+        run: |
+          version=$(grep '^version:' pubspec.yaml | awk '{print $2}')
+          if [ "v$version" != "$GITHUB_REF_NAME" ]; then
+            echo "Tag $GITHUB_REF_NAME does not match pubspec version $version" >&2
+            exit 1
+          fi
+      - run: flutter pub publish --force

@@ -1,47 +1,109 @@
-group 'com.github.chinloyal.pusher_client'
-version '1.0-SNAPSHOT'
+group = "com.github.chinloyal.pusher_client"
+version = "3.0.0"
 
 buildscript {
-    ext.kotlin_version = '1.3.50'
+    ext.kotlin_version = "2.1.21"
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
-
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.0'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath("com.android.tools.build:gradle:8.9.1")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
     }
 }
 
-rootProject.allprojects {
+allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 }
 
-apply plugin: 'com.android.library'
-apply plugin: 'kotlin-android'
+apply plugin: "com.android.library"
+
+// ---------------------------------------------------------------------------
+// Kotlin support across Android Gradle Plugin versions.
+//
+// * AGP 8.x: the Kotlin Gradle Plugin (KGP) must be applied, so we apply it.
+// * AGP 9.x: Kotlin is compiled by AGP itself ("built-in Kotlin"). When an app
+//   opts out with `android.builtInKotlin=false` (Flutter's current template
+//   default), Flutter's Gradle plugin applies KGP to plugins on our behalf.
+//   Applying KGP ourselves on AGP 9 would break built-in Kotlin builds and makes
+//   Flutter warn that this plugin is not migrated.
+// See https://docs.flutter.dev/release/breaking-changes/migrate-to-built-in-kotlin
+// ---------------------------------------------------------------------------
+def agpMajorVersion = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION.tokenize(".")[0].toInteger()
+if (agpMajorVersion < 9) {
+    pluginManager.apply("org.jetbrains.kotlin.android")
+}
 
 android {
-    compileSdkVersion 29
+    namespace = "com.github.chinloyal.pusher_client"
+    compileSdk = 36
+
+    defaultConfig {
+        minSdk = 21
+        consumerProguardFiles("consumer-rules.pro")
+    }
+
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
 
     sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-    }
-    defaultConfig {
-        minSdkVersion 16
-    }
-    lintOptions {
-        disable 'InvalidPackage'
+        main.java.srcDirs += "src/main/kotlin"
+        test.java.srcDirs += "src/test/kotlin"
     }
 
-    dependencies {
-        implementation "com.pusher:pusher-java-client:2.2.5"
+    testOptions {
+        unitTests {
+            returnDefaultValues = true
+            all {
+                useJUnitPlatform()
+                outputs.upToDateWhen { false }
+                testLogging {
+                    events "passed", "skipped", "failed", "standardOut", "standardError"
+                    showStandardStreams = true
+                }
+            }
+        }
     }
+
+    lint {
+        disable "InvalidPackage"
+    }
+}
+
+// Align Kotlin's JVM target with Java's. With built-in Kotlin the `kotlin`
+// extension already exists; otherwise configure it once KGP is applied (by this
+// script on AGP 8, or by Flutter's Gradle plugin on AGP 9 with built-in Kotlin off).
+def configureKotlinJvmTarget = {
+    if (project.extensions.getByName("kotlin").hasProperty("compilerOptions")) {
+        kotlin {
+            compilerOptions {
+                jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+            }
+        }
+    } else {
+        // KGP 1.x (apps created from older Flutter templates).
+        android.kotlinOptions.jvmTarget = "17"
+    }
+}
+if (project.extensions.findByName("kotlin") != null) {
+    configureKotlinJvmTarget()
+} else {
+    plugins.withId("org.jetbrains.kotlin.android") { configureKotlinJvmTarget() }
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation("com.pusher:pusher-java-client:2.4.5")
+    // pusher-java declares gson with runtime scope only; this plugin uses it at compile time.
+    implementation("com.google.code.gson:gson:2.9.1")
+
+    testImplementation("org.jetbrains.kotlin:kotlin-test")
+    testImplementation("org.mockito:mockito-core:5.14.2")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:5.4.0")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher:1.11.4")
 }

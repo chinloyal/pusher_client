@@ -1,41 +1,16 @@
 PODS:
   - Flutter (1.0.0)
-  - pusher_client (1.0.0):
-    - Flutter
-    - PusherSwiftWithEncryption (~> 8.0.0)
-  - PusherSwiftWithEncryption (8.0.0):
-    - ReachabilitySwift (~> 5.0)
-    - Sodium (= 0.8.0)
-    - Starscream (~> 3.1)
-  - ReachabilitySwift (5.0.0)
-  - Sodium (0.8.0)
-  - Starscream (3.1.1)
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
-  - pusher_client (from `.symlinks/plugins/pusher_client/ios`)
-
-SPEC REPOS:
-  trunk:
-    - PusherSwiftWithEncryption
-    - ReachabilitySwift
-    - Sodium
-    - Starscream
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
-  pusher_client:
-    :path: ".symlinks/plugins/pusher_client/ios"
 
 SPEC CHECKSUMS:
-  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  pusher_client: 98d16b50f0ebb4d67d3f61b29723142c03179da9
-  PusherSwiftWithEncryption: 8ed9c9cf743b0530aa3a8c60de6734475f1aa67d
-  ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
-  Sodium: 63c0ca312a932e6da481689537d4b35568841bdc
-  Starscream: 4bb2f9942274833f7b4d296a55504dcfc7edb7b0
+  Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
 
-PODFILE CHECKSUM: a75497545d4391e2d394c3668e20cfb1c2bbd4aa
+PODFILE CHECKSUM: 3c63482e143d1b91d2d2560aee9fb04ecc74ac7e
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.16.2
