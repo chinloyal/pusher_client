@@ -62,16 +62,21 @@ PusherAuthorizationData authData(
   );
 }
 
-/// Triggers [event] on [channels] via the signed Pusher REST API.
+/// Triggers [event] on [channel] via the signed Pusher REST API.
+///
+/// A non-String [data] is JSON-encoded into a string, as Pusher requires. With
+/// [rawJsonData] it is sent as a JSON value instead, the way some compatible
+/// servers' clients do, so the server forwards `data` as an object.
 Future<void> restTrigger(
   String channel,
   String event,
-  Object data,
-) async {
+  Object data, {
+  bool rawJsonData = false,
+}) async {
   final body = jsonEncode({
     'name': event,
     'channels': [channel],
-    'data': data is String ? data : jsonEncode(data),
+    'data': rawJsonData || data is String ? data : jsonEncode(data),
   });
   final path = '/apps/$pusherAppId/events';
   final params = <String, String>{

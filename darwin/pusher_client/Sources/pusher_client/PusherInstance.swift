@@ -169,7 +169,7 @@ final class PusherInstance {
     let pusher: Pusher
     private let delegate: InstanceDelegate
     /// Retained here; the websocket only references it weakly.
-    private var subscriptionDataNormalizer: SubscriptionDataNormalizer?
+    private var incomingMessageNormalizer: IncomingMessageNormalizer?
     private let emitter: EventEmitting
     private let enableLogging: Bool
     private var disposed = false
@@ -198,7 +198,7 @@ final class PusherInstance {
         let delegate = InstanceDelegate(instanceId: instanceId, emitter: emitter, enableLogging: enableLogging)
         delegate.pusher = pusher
         pusher.delegate = delegate
-        self.subscriptionDataNormalizer = SubscriptionDataNormalizer.install(on: pusher.connection)
+        self.incomingMessageNormalizer = IncomingMessageNormalizer.install(on: pusher.connection)
 
         // One global binding for the lifetime of the instance: app/client events,
         // pusher:subscription_succeeded and pusher:subscription_error.

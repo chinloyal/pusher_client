@@ -101,6 +101,34 @@ void main() {
       expect(recorder.named('my-event'), hasLength(2));
     });
 
+    testWidgets('object data from server arrives as JSON string',
+        (tester) async {
+      final t = TestClient(testOptions());
+      final name = 'test-object-data-${unique()}';
+      final channel = t.client.subscribe(name);
+      final recorder = await subscribeAndWait(channel);
+
+      // Some servers (laravel-websockets, soketi) forward `data` as a JSON
+      // value instead of a JSON-encoded string.
+      const object = {
+        'a': 1,
+        'b': {'c': 'x'},
+        'd': [1, 2],
+      };
+      await restTrigger(name, 'object-event', object, rawJsonData: true);
+      final event = await recorder.waitFor('object-event');
+      expect(event.data, isA<String>());
+      expect(jsonDecode(event.data!), object);
+
+      await restTrigger(name, 'array-event', [1, 'two'], rawJsonData: true);
+      final array = await recorder.waitFor('array-event');
+      expect(jsonDecode(array.data!), [1, 'two']);
+
+      await restTrigger(name, 'number-event', 42, rawJsonData: true);
+      final number = await recorder.waitFor('number-event');
+      expect(jsonDecode(number.data!), 42);
+    });
+
     testWidgets('subscribe before the connection is up', (tester) async {
       final client = PusherClient(pusherKey, testOptions(), autoConnect: false);
       addTearDown(client.dispose);
