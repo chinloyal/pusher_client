@@ -1,3 +1,6 @@
+// Flutter 3.47+ deprecates this library in favour of package:material_ui, which
+// does not exist on older Flutter versions this example still supports (3.27+).
+// ignore: deprecated_member_use
 import 'package:flutter/material.dart';
 import 'package:pusher_client/pusher_client.dart';
 
